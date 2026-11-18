@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo · Dulces Doña Ana</title>
+  <link rel="stylesheet" th:href="@{/css/dulceria.css}">
+</head>
+<body>
+  <header class="encabezado">
+    <h1>Catálogo de dulces</h1>
+    <p><a th:href="@{/}" style="color:#fff">Volver al inicio</a></p>
+  </header>
+  <main class="contenido">
+    <p>Tenemos <strong th:text="${#lists.size(dulces)}">0</strong> dulces.</p>
+    <table border="1" cellpadding="6" style="border-collapse:collapse; width:100%">
+      <tr><th>Dulce</th><th>Categoría</th><th>Precio</th></tr>
+      <!-- th:each repite la fila una vez por cada dulce de la lista -->
+      <tr th:each="d : ${dulces}">
+        <td>
+          <strong th:text="${d.nombre}">Nombre</strong><br>
+          <small th:text="${d.descripcion}">Descripción</small>
+        </td>
+        <td th:text="${d.categoria.nombre}">Categoría</td>
+        <!-- #numbers da formato al precio: 3000 -> 3.000 -->
+        <td th:text="'$ ' + ${#numbers.formatInteger(d.precio, 1, 'POINT')}">$ 0</td>
+      </tr>
+    </table>
+  </main>
+</body>
+</html>
+
