@@ -1,0 +1,15 @@
+### Lista completa en JSON
+GET http://localhost:8080/api/dulces
+ 
+### Solo una categoría
+GET http://localhost:8080/api/dulces?categoria=COCADAS
+ 
+### Un dulce
+GET http://localhost:8080/api/dulces/2
+ 
+### Un dulce que no existe (esperado: 404)
+GET http://localhost:8080/api/dulces/999
+ 
+### Categoría inexistente (esperado: 400)
+GET http://localhost:8080/api/dulces?categoria=HELADOS
+
