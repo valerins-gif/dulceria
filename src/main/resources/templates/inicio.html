@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${nombreTienda}">Tienda</title>
+  <link rel="stylesheet" th:href="@{/css/dulceria.css}">
+</head>
+<body>
+  <header class="encabezado">
+    <!-- th:text reemplaza el texto de ejemplo por el valor que envió el controlador -->
+    <h1 th:text="${nombreTienda}">Nombre de la tienda</h1>
+    <p th:text="${eslogan}">Eslogan</p>
+  </header>
+  <main class="contenido">
+    <h2 th:text="${saludo}">¡Hola!</h2>
+    <p>Cocadas, alegrías, panelitas y conservas hechas a mano.</p>
+    <p><strong>Horario:</strong> <span th:text="${horario}">Horario</span></p>
+    <p class="nota">Esta página es DINÁMICA: los textos los envía el controlador en cada petición.</p>
+  </main>
+</body>
+</html>
+
