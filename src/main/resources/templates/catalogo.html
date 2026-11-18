@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catálogo · Dulces Doña Ana</title>
-  <link rel="stylesheet" th:href="@{/css/dulceria.css}">
-</head>
+<head th:replace="~{fragments/layout :: head('Catálogo')}"></head>
 <body>
-  <header class="encabezado">
-    <h1>Catálogo de dulces</h1>
-    <p><a th:href="@{/}" style="color:#fff">Volver al inicio</a></p>
-  </header>
-  <main class="contenido">
-    <p>Tenemos <strong th:text="${#lists.size(dulces)}">0</strong> dulces.</p>
-    <table border="1" cellpadding="6" style="border-collapse:collapse; width:100%">
-      <tr><th>Dulce</th><th>Categoría</th><th>Precio</th></tr>
-      <!-- th:each repite la fila una vez por cada dulce de la lista -->
-      <tr th:each="d : ${dulces}">
-        <td>
-          <strong th:text="${d.nombre}">Nombre</strong><br>
-          <small th:text="${d.descripcion}">Descripción</small>
-        </td>
-        <td th:text="${d.categoria.nombre}">Categoría</td>
-        <!-- #numbers da formato al precio: 3000 -> 3.000 -->
-        <td th:text="'$ ' + ${#numbers.formatInteger(d.precio, 1, 'POINT')}">$ 0</td>
-      </tr>
-    </table>
-  </main>
+<nav th:replace="~{fragments/layout :: menu('catalogo')}"></nav>
+ 
+<main class="container py-4">
+  <h1 class="h3">Catálogo de dulces</h1>
+  <p class="text-muted">Tenemos <span th:text="${#lists.size(dulces)}">0</span> dulces típicos.</p>
+ 
+  <div class="row g-3">
+    <div class="col-sm-6 col-lg-4" th:each="d : ${dulces}">
+      <div class="card tarjeta-dulce h-100 p-3">
+        <div class="d-flex gap-3 align-items-center mb-2">
+          <div class="inicial" th:text="${#strings.substring(d.nombre, 0, 1)}">C</div>
+          <div>
+            <h2 class="h6 mb-0" th:text="${d.nombre}">Nombre</h2>
+            <small class="text-muted" th:text="${d.categoria.nombre}">Categoría</small>
+          </div>
+        </div>
+        <p class="small mb-2" th:text="${d.descripcion}">Descripción</p>
+        <div class="d-flex justify-content-between align-items-center mt-auto">
+          <span class="precio" th:text="'$ ' + ${#numbers.formatInteger(d.precio, 1, 'POINT')}">$ 0</span>
+          <!-- th:if / th:unless: muestra una u otra etiqueta según la condición -->
+          <span class="badge bg-success" th:if="${d.disponible}">Disponible</span>
+          <span class="badge bg-secondary" th:unless="${d.disponible}">Agotado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
 </body>
 </html>
 

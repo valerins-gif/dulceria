@@ -13,7 +13,7 @@ import co.edu.sena.adso.dulceria.model.Categoria;
 import co.edu.sena.adso.dulceria.model.Dulce;
  
 @Repository   // Capa de DATOS. Por ahora los datos viven en memoria: se pierden al reiniciar.
-public class DulceRepositoryMemoria implements DulceRepository {
+public final class DulceRepositoryMemoria implements DulceRepository {
  
     private final Map<Long, Dulce> datos = new ConcurrentHashMap<>();
     private final AtomicLong secuencia = new AtomicLong();
