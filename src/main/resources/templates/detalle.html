@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${dulce.nombre})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: menu('catalogo')}"></nav>
+ 
+<main class="container py-4" style="max-width: 760px;">
+  <a th:href="@{/catalogo}">&larr; Volver al catálogo</a>
+ 
+  <div class="card tarjeta-dulce p-4 mt-3">
+    <div class="d-flex gap-3 align-items-center">
+      <div class="inicial" th:text="${#strings.substring(dulce.nombre, 0, 1)}">C</div>
+      <div>
+        <h1 class="h3 mb-0" th:text="${dulce.nombre}">Nombre</h1>
+        <a class="small" th:href="@{/catalogo(categoria=${dulce.categoria})}" th:text="${dulce.categoria.nombre}">Categoría</a>
+      </div>
+    </div>
+    <p class="mt-3" th:text="${dulce.descripcion}">Descripción</p>
+    <p class="precio" th:text="'$ ' + ${#numbers.formatInteger(dulce.precio, 1, 'POINT')} + ' por unidad'">$ 0</p>
+    <p class="mb-0">
+      <span class="badge bg-success" th:if="${dulce.disponible}">Disponible para encargo</span>
+      <span class="badge bg-secondary" th:unless="${dulce.disponible}">Agotado por hoy</span>
+    </p>
+    <p class="small text-muted mt-3 mb-0">Código del producto: <span th:text="${dulce.id}">0</span></p>
+  </div>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
+

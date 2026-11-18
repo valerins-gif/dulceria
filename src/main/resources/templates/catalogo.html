@@ -6,7 +6,17 @@
  
 <main class="container py-4">
   <h1 class="h3">Catálogo de dulces</h1>
-  <p class="text-muted">Tenemos <span th:text="${#lists.size(dulces)}">0</span> dulces típicos.</p>
+ 
+  <!-- Filtro por categoría: cada botón es un enlace con un parámetro de consulta -->
+  <div class="d-flex flex-wrap gap-2 my-3">
+    <a class="btn btn-sm" th:classappend="${categoriaActual == null} ? 'btn-marca' : 'btn-outline-secondary'"
+       th:href="@{/catalogo}">Todos</a>
+    <a class="btn btn-sm" th:each="c : ${categorias}"
+       th:classappend="${categoriaActual == c} ? 'btn-marca' : 'btn-outline-secondary'"
+       th:href="@{/catalogo(categoria=${c})}" th:text="${c.nombre}">Categoría</a>
+  </div>
+ 
+  <p class="text-muted" th:if="${#lists.isEmpty(dulces)}">No hay dulces en esta categoría.</p>
  
   <div class="row g-3">
     <div class="col-sm-6 col-lg-4" th:each="d : ${dulces}">
@@ -14,14 +24,14 @@
         <div class="d-flex gap-3 align-items-center mb-2">
           <div class="inicial" th:text="${#strings.substring(d.nombre, 0, 1)}">C</div>
           <div>
-            <h2 class="h6 mb-0" th:text="${d.nombre}">Nombre</h2>
+            <!-- @{/catalogo/{id}(id=${d.id})} construye la URL /catalogo/3 -->
+            <h2 class="h6 mb-0"><a th:href="@{/catalogo/{id}(id=${d.id})}" th:text="${d.nombre}">Nombre</a></h2>
             <small class="text-muted" th:text="${d.categoria.nombre}">Categoría</small>
           </div>
         </div>
         <p class="small mb-2" th:text="${d.descripcion}">Descripción</p>
         <div class="d-flex justify-content-between align-items-center mt-auto">
           <span class="precio" th:text="'$ ' + ${#numbers.formatInteger(d.precio, 1, 'POINT')}">$ 0</span>
-          <!-- th:if / th:unless: muestra una u otra etiqueta según la condición -->
           <span class="badge bg-success" th:if="${d.disponible}">Disponible</span>
           <span class="badge bg-secondary" th:unless="${d.disponible}">Agotado</span>
         </div>

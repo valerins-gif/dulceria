@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Spring Boot muestra AUTOMÁTICAMENTE templates/error.html cuando ocurre un error en una página -->
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: menu('')}"></nav>
+ 
+<main class="container py-5 text-center">
+  <!-- status, error y message los entrega Spring Boot -->
+  <h1 class="display-4" th:text="${status}">404</h1>
+  <p class="lead" th:text="${message != null and !#strings.isEmpty(message)} ? ${message} : ${error}">Mensaje</p>
+  <a class="btn btn-marca" th:href="@{/catalogo}">Volver al catálogo</a>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
