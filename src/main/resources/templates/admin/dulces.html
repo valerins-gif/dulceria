@@ -14,7 +14,7 @@
  
   <table class="table table-hover bg-white align-middle">
     <thead class="table-light">
-      <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th class="text-end">Precio</th><th>Estado</th></tr>
+      <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th class="text-end">Precio</th><th>Estado</th><th>Acciones</th></tr>
     </thead>
     <tbody>
       <tr th:each="d : ${dulces}">
@@ -26,6 +26,14 @@
           <span class="badge" th:classappend="${d.disponible} ? 'bg-success' : 'bg-secondary'"
                 th:text="${d.disponible} ? 'Disponible' : 'Agotado'">Estado</span>
         </td>
+        <td class="text-nowrap">
+          <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/dulces/{id}/editar(id=${d.id})}">Editar</a>
+          <!-- Eliminar con un formulario POST y una confirmación del navegador -->
+          <form class="d-inline" method="post" th:action="@{/admin/dulces/{id}/eliminar(id=${d.id})}"
+                onsubmit="return confirm('¿Eliminar este dulce?');">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+          </form>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -34,3 +42,4 @@
 <footer th:replace="~{fragments/layout :: pie}"></footer>
 </body>
 </html>
+
