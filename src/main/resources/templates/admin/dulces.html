@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Administrar dulces')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: menu('admin')}"></nav>
+ 
+<main class="container py-4">
+  <div th:replace="~{fragments/layout :: alertas}"></div>
+ 
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Administrar dulces</h1>
+    <a class="btn btn-marca" th:href="@{/admin/dulces/nuevo}">+ Nuevo dulce</a>
+  </div>
+ 
+  <table class="table table-hover bg-white align-middle">
+    <thead class="table-light">
+      <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th class="text-end">Precio</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="d : ${dulces}">
+        <td th:text="${d.id}">1</td>
+        <td th:text="${d.nombre}">Nombre</td>
+        <td th:text="${d.categoria.nombre}">Categoría</td>
+        <td class="text-end" th:text="'$ ' + ${#numbers.formatInteger(d.precio, 1, 'POINT')}">$ 0</td>
+        <td>
+          <span class="badge" th:classappend="${d.disponible} ? 'bg-success' : 'bg-secondary'"
+                th:text="${d.disponible} ? 'Disponible' : 'Agotado'">Estado</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

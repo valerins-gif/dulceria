@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${dulce.id == null ? 'Nuevo dulce' : 'Editar dulce'})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: menu('admin')}"></nav>
+ 
+<main class="container py-4" style="max-width: 720px;">
+  <h1 class="h3 mb-3" th:text="${dulce.id == null} ? 'Registrar dulce' : 'Editar dulce'">Dulce</h1>
+ 
+  <!-- th:object: el formulario trabaja sobre el objeto "dulce" del Model.
+       novalidate: dejamos que valide el SERVIDOR, para ver los mensajes de Spring -->
+  <form th:action="@{/admin/dulces/guardar}" th:object="${dulce}" method="post" novalidate>
+ 
+    <!-- Campo oculto: vacío si es nuevo; con el código si se está editando -->
+    <input type="hidden" th:field="*{id}">
+ 
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <!-- th:field genera id, name y value; th:errorclass marca el campo si tiene error -->
+      <input type="text" class="form-control" th:field="*{nombre}" th:errorclass="is-invalid">
+      <div class="invalid-feedback" th:errors="*{nombre}">Error</div>
+    </div>
+ 
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" rows="2" th:field="*{descripcion}" th:errorclass="is-invalid"></textarea>
+      <div class="invalid-feedback" th:errors="*{descripcion}">Error</div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="precio" class="form-label">Precio (COP)</label>
+        <input type="number" class="form-control" th:field="*{precio}" th:errorclass="is-invalid">
+        <div class="invalid-feedback" th:errors="*{precio}">Error</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="categoria" class="form-label">Categoría</label>
+        <select class="form-select" th:field="*{categoria}" th:errorclass="is-invalid">
+          <option value="">— Seleccione —</option>
+          <option th:each="c : ${categorias}" th:value="${c}" th:text="${c.nombre}">Categoría</option>
+        </select>
+        <div class="invalid-feedback" th:errors="*{categoria}">Error</div>
+      </div>
+    </div>
+ 
+    <div class="form-check mb-4">
+      <input type="checkbox" class="form-check-input" th:field="*{disponible}">
+      <label class="form-check-label" for="disponible1">Disponible para la venta</label>
+    </div>
+ 
+    <button type="submit" class="btn btn-marca">Guardar</button>
+    <a class="btn btn-outline-secondary" th:href="@{/admin/dulces}">Cancelar</a>
+  </form>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
+

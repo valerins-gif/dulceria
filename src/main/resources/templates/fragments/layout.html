@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<!-- Este archivo no es una página: guarda FRAGMENTOS que reutilizan todas las páginas -->
  
-<!-- Fragmento 1: el <head>, recibe el título de la página -->
 <head th:fragment="head(titulo)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +11,6 @@
  
 <body>
  
-<!-- Fragmento 2: el menú, recibe qué opción está activa -->
 <nav th:fragment="menu(activo)" class="navbar navbar-expand navbar-dark barra">
   <div class="container">
     <a class="navbar-brand fw-bold" th:href="@{/}">Dulces Doña Ana</a>
@@ -24,11 +21,20 @@
       <li class="nav-item">
         <a class="nav-link" th:classappend="${activo == 'catalogo'} ? 'active'" th:href="@{/catalogo}">Catálogo</a>
       </li>
+      <!-- NUEVO · Enlace a la administración -->
+      <li class="nav-item">
+        <a class="nav-link" th:classappend="${activo == 'admin'} ? 'active'" th:href="@{/admin/dulces}">Administrar</a>
+      </li>
     </ul>
   </div>
 </nav>
  
-<!-- Fragmento 3: el pie de página -->
+<!-- NUEVO · Fragmento 4: mensajes de éxito o de error -->
+<div th:fragment="alertas">
+  <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}">Mensaje</div>
+  <div class="alert alert-danger" th:if="${error}" th:text="${error}">Error</div>
+</div>
+ 
 <footer th:fragment="pie" class="pie">
   <div class="container">
     Dulces Doña Ana · Portal de los Dulces, Centro Histórico de Cartagena ·
