@@ -5,6 +5,7 @@
 <nav th:replace="~{fragments/layout :: menu('catalogo')}"></nav>
  
 <main class="container py-4" style="max-width: 760px;">
+  <div th:replace="~{fragments/layout :: alertas}"></div>
   <a th:href="@{/catalogo}">&larr; Volver al catálogo</a>
  
   <div class="card tarjeta-dulce p-4 mt-3">
@@ -21,7 +22,36 @@
       <span class="badge bg-success" th:if="${dulce.disponible}">Disponible para encargo</span>
       <span class="badge bg-secondary" th:unless="${dulce.disponible}">Agotado por hoy</span>
     </p>
-    <p class="small text-muted mt-3 mb-0">Código del producto: <span th:text="${dulce.id}">0</span></p>
+  </div>
+ 
+  <!-- NUEVO · Formulario de encargo: solo si el dulce está disponible -->
+  <div class="card tarjeta-dulce p-4 mt-3" th:if="${dulce.disponible}">
+    <h2 class="h5">Haga su encargo</h2>
+    <form th:action="@{/catalogo/{id}/encargos(id=${dulce.id})}" th:object="${encargo}" method="post" novalidate>
+      <div class="row">
+        <div class="col-md-7 mb-3">
+          <label for="nombreCliente" class="form-label">Su nombre</label>
+          <input type="text" class="form-control" th:field="*{nombreCliente}" th:errorclass="is-invalid">
+          <div class="invalid-feedback" th:errors="*{nombreCliente}">Error</div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="telefono" class="form-label">Celular</label>
+          <input type="tel" class="form-control" th:field="*{telefono}" th:errorclass="is-invalid" placeholder="3001234567">
+          <div class="invalid-feedback" th:errors="*{telefono}">Error</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="cantidad" class="form-label">Cantidad</label>
+          <input type="number" class="form-control" th:field="*{cantidad}" th:errorclass="is-invalid">
+          <div class="invalid-feedback" th:errors="*{cantidad}">Error</div>
+        </div>
+        <div class="col-md-8 mb-3">
+          <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
+          <input type="date" class="form-control" th:field="*{fechaEntrega}" th:errorclass="is-invalid">
+          <div class="invalid-feedback" th:errors="*{fechaEntrega}">Error</div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-marca">Enviar encargo</button>
+    </form>
   </div>
 </main>
  

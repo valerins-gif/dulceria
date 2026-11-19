@@ -21,15 +21,18 @@
       <li class="nav-item">
         <a class="nav-link" th:classappend="${activo == 'catalogo'} ? 'active'" th:href="@{/catalogo}">Catálogo</a>
       </li>
-      <!-- NUEVO · Enlace a la administración -->
       <li class="nav-item">
         <a class="nav-link" th:classappend="${activo == 'admin'} ? 'active'" th:href="@{/admin/dulces}">Administrar</a>
+      </li>
+      <!-- NUEVO · Enlace a los encargos -->
+      <li class="nav-item">
+        <a class="nav-link" th:classappend="${activo == 'encargos'} ? 'active'" th:href="@{/admin/encargos}">Encargos</a>
       </li>
     </ul>
   </div>
 </nav>
  
-<!-- NUEVO · Fragmento 4: mensajes de éxito o de error -->
+<!-- Fragmento 4: mensajes de éxito o de error -->
 <div th:fragment="alertas">
   <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}">Mensaje</div>
   <div class="alert alert-danger" th:if="${error}" th:text="${error}">Error</div>

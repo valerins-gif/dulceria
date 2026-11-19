@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Encargos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: menu('encargos')}"></nav>
+ 
+<main class="container py-4">
+  <h1 class="h3">Encargos recibidos</h1>
+  <p class="text-muted" th:if="${#lists.isEmpty(encargos)}">Todavía no hay encargos. Haga uno desde el catálogo.</p>
+ 
+  <table class="table bg-white align-middle" th:unless="${#lists.isEmpty(encargos)}">
+    <thead class="table-light">
+      <tr><th>Recibido</th><th>Cliente</th><th>Celular</th><th>Dulce</th><th class="text-end">Cant.</th><th>Entrega</th><th class="text-end">Total</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="e : ${encargos}">
+        <td th:text="${#temporals.format(e.creadoEn, 'dd/MM HH:mm')}">01/01 10:00</td>
+        <td th:text="${e.nombreCliente}">Cliente</td>
+        <td th:text="${e.telefono}">3000000000</td>
+        <!-- Navegamos la relación: del encargo a su dulce -->
+        <td th:text="${e.dulce.nombre}">Dulce</td>
+        <td class="text-end" th:text="${e.cantidad}">1</td>
+        <td th:text="${#temporals.format(e.fechaEntrega, 'dd/MM/yyyy')}">01/01/2026</td>
+        <td class="text-end" th:text="'$ ' + ${#numbers.formatInteger(e.total, 1, 'POINT')}">$ 0</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="6" class="text-end">Total encargado</th>
+        <th class="text-end precio" th:text="'$ ' + ${#numbers.formatInteger(total, 1, 'POINT')}">$ 0</th>
+      </tr>
+    </tfoot>
+  </table>
+</main>
+ 
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
+
